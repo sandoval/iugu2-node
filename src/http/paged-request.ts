@@ -1,5 +1,7 @@
 import { Request, RequestOptions } from './request'
-import { URLSearchParams } from 'url'
+
+import * as url from 'url'
+import * as querystring from 'querystring'
 
 export interface PagedResponse<T> {
     totalItems: number
@@ -34,9 +36,16 @@ export class PagedRequest<InType, OutType> extends Request<InType, PagedResponse
     }
 
     public requestPage(body?: InType): Promise<PagedResponse<OutType>> {
-        const params = new URLSearchParams(this.url.search)
-        params.set('limit', this.limit.toFixed(0))
-        params.set('start', (this.limit * this.page).toFixed(0))
+        let params: any = {}
+        if (this.url.search) {
+            params = querystring.parse(this.url.search)
+        }
+        params.limit = this.limit.toFixed(0)
+        params.start = (this.limit * this.page).toFixed(0)
+        this.url.search = '?' + querystring.stringify(params)
+
+        // Recreate HTTP request object
+        this.setUrl(url.format(this.url))
 
         return this.begin(body)
     }

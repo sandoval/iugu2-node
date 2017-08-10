@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint {src,test}/**/*.ts --format stylish",
+    "lint": "tslint src/**/*.ts --format stylish --type-check --project tsconfig.json",
     "test": "nyc mocha",
     "test:watch": "mocha -w --reporter min"
   },

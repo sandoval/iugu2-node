@@ -44,6 +44,7 @@ export class Request<InType, OutType> {
         'content-type': 'application/json',
         'accept': 'application/json'
     }
+    protected url: urlmod.Url
 
     private encoder = new JSONEncoder<InType>()
     private decoder = new JSONDecoder<OutType>()
@@ -65,12 +66,12 @@ export class Request<InType, OutType> {
      * Supported protocols are HTTP and HTTPS.
      */
     public setUrl(url: string) {
-        let uri = urlmod.parse(url)
+        this.url = urlmod.parse(url)
 
-        if (uri.protocol === 'https:') {
-            this.request = this.createHttps(uri)
+        if (this.url.protocol === 'https:') {
+            this.request = this.createHttps(this.url)
         } else {
-            this.request = this.createHttp(uri)
+            this.request = this.createHttp(this.url)
         }
     }
 
@@ -118,7 +119,8 @@ export class Request<InType, OutType> {
                 method: this.method,
                 headers: this.headers,
                 hostname: uri.hostname,
-                path: uri.path,
+                pathname: uri.pathname,
+                search: uri.search,
                 protocol: uri.protocol,
                 port: port
             })
@@ -130,7 +132,8 @@ export class Request<InType, OutType> {
                 method: this.method,
                 headers: this.headers,
                 hostname: uri.hostname,
-                path: uri.path,
+                pathname: uri.pathname,
+                search: uri.search,
                 protocol: uri.protocol,
                 port: port
             })

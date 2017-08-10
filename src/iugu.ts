@@ -1,4 +1,6 @@
 import { Request } from './http/request'
+import { PagedRequest } from './http/paged-request'
+import { CustomerAPI } from './api'
 
 // The default IUGU API url
 const API_URL = 'https://api.iugu.com/v1'
@@ -10,12 +12,24 @@ const API_URL = 'https://api.iugu.com/v1'
  */
 export class Iugu {
     private token: string
+    private customerInstance: CustomerAPI
 
     /**
      * Returns the current instance API token
      */
     public get apiToken(): string {
         return this.token
+    }
+
+    /**
+     * Access the customer API
+     */
+    public get customer(): CustomerAPI {
+        if (!this.customerInstance) {
+            this.customerInstance = new CustomerAPI(this)
+        }
+
+        return this.customerInstance
     }
 
     /**
@@ -45,10 +59,30 @@ export class Iugu {
      * @param method The HTTP method to be used
      * @param endpoint The API endpoint, with the preceeding slash
      *
-     * @example iugu.makeRequest<IuguCustomer>('GET', '/customers')
+     * @example iugu.makeRequest<Customer>('GET', '/customers')
      */
-    public makeRequest<OutType, InType = any>(method: string, endpoint: string, headers: any = null): Request<InType, OutType> {
+    public makeRequest<OutType, InType = void>(method: string, endpoint: string, headers: any = null): Request<InType, OutType> {
         const request = new Request<InType, OutType>({
+            method: method,
+            url: API_URL + endpoint,
+            headers: headers
+        })
+
+        request.setHeader('authorization', this.getAuthorizationHeader())
+
+        return request
+    }
+
+    /**
+     * Creates a new PagedRequest, setting to API url and the authorization header
+     *
+     * @param method The HTTP method to be used
+     * @param endpoint The API endpoint, with the preceeding slash
+     *
+     * @example iugu.makePagedRequest<Customer>('GET', '/customers')
+     */
+    public makePagedRequest<OutType, InType = void>(method: string, endpoint: string, limit = 100, headers: any = null): PagedRequest<InType, OutType> {
+        const request = new PagedRequest<InType, OutType>(limit, {
             method: method,
             url: API_URL + endpoint,
             headers: headers

@@ -115,12 +115,13 @@ export class Request<InType, OutType> {
 
     private createHttp(uri: urlmod.Url): http.ClientRequest {
         let port = Number.parseInt(uri.port || '80')
+        let path = uri.pathname || '/'
+        let search = uri.search || ''
         return http.request({
                 method: this.method,
                 headers: this.headers,
                 hostname: uri.hostname,
-                pathname: uri.pathname,
-                search: uri.search,
+                path: path + search,
                 protocol: uri.protocol,
                 port: port
             })
@@ -128,12 +129,14 @@ export class Request<InType, OutType> {
 
     private createHttps(uri: urlmod.Url): http.ClientRequest {
         let port = Number.parseInt(uri.port || '443')
+        let path = uri.pathname || '/'
+        let search = uri.search || ''
+
         return https.request({
                 method: this.method,
                 headers: this.headers,
                 hostname: uri.hostname,
-                pathname: uri.pathname,
-                search: uri.search,
+                path: path + search,
                 protocol: uri.protocol,
                 port: port
             })

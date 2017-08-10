@@ -20,4 +20,24 @@ export class CustomerAPI extends APIWrapper {
     public get(id: string): Promise<Customer> {
         return this.iugu.makeRequest<Customer>('GET', `/customers/${id}`).begin()
     }
+
+    /**
+     * Creates a new Customer
+     *
+     * @param customer the customer to be created
+     */
+    public create(customer: Customer): Promise<Customer> {
+        return this.iugu.makeRequest<Customer, Customer>('POST', '/customers').begin(customer)
+    }
+
+    /**
+     * Deletes an existing Customer
+     */
+    public delete(id: string): Promise<void> {
+        if (!id) {
+            return Promise.reject('invalid_id')
+        }
+
+        return this.iugu.makeRequest('DELETE', `/customers/${id}`).begin()
+    }
 }

@@ -61,7 +61,7 @@ export class Iugu {
      *
      * @example iugu.makeRequest<Customer>('GET', '/customers')
      */
-    public makeRequest<OutType, InType = void>(method: string, endpoint: string, headers: any = null): Request<InType, OutType> {
+    public makeRequest<OutType = void, InType = void>(method: string, endpoint: string, headers: any = null): Request<InType, OutType> {
         const request = new Request<InType, OutType>({
             method: method,
             url: API_URL + endpoint,
@@ -81,7 +81,7 @@ export class Iugu {
      *
      * @example iugu.makePagedRequest<Customer>('GET', '/customers')
      */
-    public makePagedRequest<OutType, InType = void>(method: string, endpoint: string, limit = 100, headers: any = null): PagedRequest<InType, OutType> {
+    public makePagedRequest<OutType = void, InType = void>(method: string, endpoint: string, limit = 100, headers: any = null): PagedRequest<InType, OutType> {
         const request = new PagedRequest<InType, OutType>(limit, {
             method: method,
             url: API_URL + endpoint,

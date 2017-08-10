@@ -1,0 +1,13 @@
+language: node_js
+dist: trusty
+sudo: false
+node_js:
+  - node
+  - lts/*
+  - iojs
+install:
+  - npm install
+script:
+  - npm lint
+  - npm build
+  - npm test

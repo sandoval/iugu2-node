@@ -4,5 +4,7 @@ import * as sinonChai from 'sinon-chai'
 
 chai.use(chaiAsPromised)
 chai.use(sinonChai)
+chai.should()
 
 export const expect = chai.expect
+export const should = chai.should

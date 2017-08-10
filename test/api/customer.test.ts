@@ -2,6 +2,8 @@
 import { expect, should } from '../chai'
 import { token } from '../token'
 
+import { ITestCallbackContext } from 'mocha'
+
 import { Iugu } from '../../src'
 import { CustomerAPI } from '../../src/api/customer'
 import { Customer } from '../../src/interfaces/customer'
@@ -79,7 +81,9 @@ describe('CustomerAPI', () => {
             expect(request).to.be.not.null
         })
 
-        it('should make a valid request', () => {
+        it('should make a valid request', function (this: ITestCallbackContext) {
+            this.timeout(3000)
+
             return request.then(c => {
                 expect(c).to.not.be.null
                 expect(c).to.haveOwnProperty('id')
@@ -125,6 +129,22 @@ describe('CustomerAPI', () => {
 
         it('should make a valid request', () => {
             return request
+        })
+    })
+
+    describe('delete(invalid id)', () => {
+        let request: Promise<void>
+
+        before('initializing basic request', () => {
+            request = iugu.customer.delete('')
+        })
+
+        it('should make a non-null request', () => {
+            expect(request).to.be.not.null
+        })
+
+        it('should make an invalid request', () => {
+            request.should.eventually.be.rejected
         })
     })
 })

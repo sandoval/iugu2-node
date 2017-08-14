@@ -8,3 +8,4 @@ chai.should()
 
 export const expect = chai.expect
 export const should = chai.should
+export const timeout = 5000

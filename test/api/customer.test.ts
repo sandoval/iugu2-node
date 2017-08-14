@@ -1,5 +1,5 @@
 // tslint:disable:no-unused-expression
-import { expect, should } from '../chai'
+import { expect, should, timeout } from '../chai'
 import { token } from '../token'
 
 import { ITestCallbackContext } from 'mocha'
@@ -47,7 +47,7 @@ describe('CustomerAPI', () => {
         })
 
         it('should make a valid request', function (this: ITestCallbackContext) {
-            this.timeout(5000)
+            this.timeout(timeout)
 
             let page = request.requestPage()
             page.should.eventually.be.fulfilled
@@ -84,7 +84,7 @@ describe('CustomerAPI', () => {
         })
 
         it('should make a valid request', function (this: ITestCallbackContext) {
-            this.timeout(5000)
+            this.timeout(timeout)
 
             return request.then(c => {
                 expect(c).to.not.be.null
@@ -113,7 +113,7 @@ describe('CustomerAPI', () => {
         })
 
         it('should make a valid request', function (this: ITestCallbackContext) {
-            this.timeout(5000)
+            this.timeout(timeout)
 
             return request.then(c => {
                 expect(c).to.not.be.null
@@ -181,7 +181,7 @@ describe('CustomerAPI', () => {
         })
 
         it('should make a valid request', function (this: ITestCallbackContext) {
-            this.timeout(5000)
+            this.timeout(timeout)
 
             return request
         })

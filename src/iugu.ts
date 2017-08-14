@@ -1,6 +1,6 @@
 import { Request } from './http/request'
 import { PagedRequest } from './http/paged-request'
-import { CustomerAPI } from './api'
+import { CustomerAPI, PaymentTokenAPI } from './api'
 
 // The default IUGU API url
 const API_URL = 'https://api.iugu.com/v1'
@@ -11,14 +11,30 @@ const API_URL = 'https://api.iugu.com/v1'
  * Should be constructed passing the API token as parameter (see https://dev.iugu.com/v1.0/reference#autentica%C3%A7%C3%A3o)
  */
 export class Iugu {
+    private _accountID: string;
     private token: string
     private customerInstance: CustomerAPI
+    private paymentTokenInstance: PaymentTokenAPI
 
     /**
      * Returns the current instance API token
      */
     public get apiToken(): string {
         return this.token
+    }
+
+    /**
+     * Returns the account ID
+     */
+    public get accountID(): string {
+        return this._accountID;
+    }
+
+    /**
+     * Sets the account ID. Needed only for payment token creation.
+     */
+    public set accountID(v: string) {
+        this._accountID = v;
     }
 
     /**
@@ -32,13 +48,34 @@ export class Iugu {
         return this.customerInstance
     }
 
+    public get paymentToken(): PaymentTokenAPI {
+        if (!this.paymentTokenInstance) {
+            this.paymentTokenInstance = new PaymentTokenAPI(this)
+        }
+
+        return this.paymentTokenInstance
+    }
+
     /**
      * Initializes the API interaction instance
      *
-     * @param apiToken the API token created for your account
+     * @param apiToken the API token created for your account. If not passed, it will be read from the environment variable IUGU_TOKEN
+     * @param accountId the IUGU account ID
      */
-    constructor(apiToken: string) {
-        this.token = apiToken
+    constructor(apiToken?: string, accountId?: string) {
+        if (apiToken) {
+            this.token = apiToken
+        } else if (process.env.IUGU_TOKEN) {
+            this.token = <string>process.env.IUGU_TOKEN
+        } else {
+            throw new Error('API token not specified')
+        }
+
+        if (accountId) {
+            this.accountID = accountId
+        } else if (process.env.IUGU_ACCOUNTID) {
+            this.accountID = <string>process.env.IUGU_ACCOUNTID
+        }
     }
 
     /**

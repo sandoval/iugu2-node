@@ -82,6 +82,10 @@ export class PaymentMethodAPI extends APIWrapper {
 
         const id = paymentMethod.id
 
+        if (!id) {
+            return Promise.reject(new Error('invalid_id'))
+        }
+
         // Deep clone!
         let body = JSON.parse(JSON.stringify(paymentMethod))
 

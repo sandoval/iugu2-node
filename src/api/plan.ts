@@ -20,7 +20,7 @@ export class PlanAPI extends APIWrapper {
      *
      * @param id the ID of the Plan
      */
-    public find(id: string): Promise<Plan> {
+    public get(id: string): Promise<Plan> {
         if (!id) {
             return Promise.reject(new Error('invalid_id'))
         }
@@ -33,7 +33,7 @@ export class PlanAPI extends APIWrapper {
      *
      * @param id the identifier of the Plan
      */
-    public findByIdentifier(identifier: string): Promise<Plan> {
+    public getByIdentifier(identifier: string): Promise<Plan> {
         if (!identifier) {
             return Promise.reject(new Error('invalid_identifier'))
         }

@@ -40,8 +40,12 @@ export class PagedRequest<InType, OutType> extends Request<InType, PagedResponse
         if (this.url.search) {
             params = querystring.parse(this.url.search)
         }
-        params.limit = this.limit.toFixed(0)
-        params.start = (this.limit * this.page).toFixed(0)
+        if (this.limit) {
+            params.limit = this.limit.toFixed(0)
+        }
+        if (this.limit && this.page) {
+            params.start = (this.limit * this.page).toFixed(0)
+        }
         this.url.search = '?' + querystring.stringify(params)
 
         // Recreate HTTP request object

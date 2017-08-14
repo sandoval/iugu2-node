@@ -39,24 +39,24 @@ export interface PlanPrice extends Object {
 
 export interface BasePlanInfo {
     /**
-     * Plan name
+     * Plan name. Required on creation.
      */
-    name: string
+    name?: string
 
     /**
-     * Plan identifier
+     * Plan identifier. Required on creation.
      */
-    identifier: string
+    identifier?: string
 
     /**
-     * How many `interval_type` will occur before a new charge
+     * How many `interval_type` will occur before a new charge. Required on creation.
      */
-    interval: number
+    interval?: number
 
     /**
-     * The unit for charges. Valid values are 'weeks' and 'months'
+     * The unit for charges. Valid values are 'weeks' and 'months'. Required on creation.
      */
-    interval_type: 'weeks' | 'months'
+    interval_type?: 'weeks' | 'months'
 }
 
 /**

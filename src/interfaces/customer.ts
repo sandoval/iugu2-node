@@ -6,18 +6,18 @@ import { Object } from './object'
  */
 export interface Customer extends Object {
     /**
-     * Customer e-mail address. Required.
+     * Customer e-mail address. Required on creation.
      *
      * @type String
      */
-    email: string
+    email?: string
 
     /**
-     * Customer name. Required.
+     * Customer name. Required on creation.
      *
      * @type String
      */
-    name: string
+    name?: string
 
     /**
      * Additional information

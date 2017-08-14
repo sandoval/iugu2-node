@@ -1,10 +1,24 @@
-import { APIWrapper } from './api-wrapper'
+import { APIWrapper } from '../api-wrapper'
+import { PaymentMethodAPI } from './payment-method'
 
-import { PagedRequest } from '../http/paged-request'
+import { PagedRequest } from '../../http/paged-request'
 
-import { Customer } from '../interfaces/customer'
+import { Customer } from '../../interfaces/customer'
 
 export class CustomerAPI extends APIWrapper {
+    private paymentMethodInstance: PaymentMethodAPI
+
+    /**
+     * Access the payment method API
+     */
+    public get paymentMethod(): PaymentMethodAPI {
+        if (!this.paymentMethodInstance) {
+            this.paymentMethodInstance = new PaymentMethodAPI(this.iugu)
+        }
+
+        return this.paymentMethodInstance
+    }
+
     /**
      * Returns a PagedRequest for all Customers
      */

@@ -161,6 +161,12 @@ describe('CustomerAPI', () => {
                 }
             })
         })
+
+        it('should fail without an id', () => {
+            request = iugu.customer.update({})
+
+            return expect(request).to.be.rejectedWith(Error)
+        })
     })
 
     describe('delete', () => {

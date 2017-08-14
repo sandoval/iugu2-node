@@ -16,6 +16,24 @@ describe('Iugu', () => {
             expect(iugu).to.be.not.null
             expect(iugu).to.be.instanceOf(Iugu)
         })
+
+        it('should create instance with no parameter', () => {
+            const localIugu = new Iugu()
+            expect(localIugu).to.be.not.null
+            expect(localIugu.apiToken).to.be.equal(iugu.apiToken)
+        })
+
+        it('should create instance with account id', () => {
+            const localIugu = new Iugu(token, process.env.IUGU_ACCOUNTID)
+            expect(localIugu).to.be.not.null
+            expect(localIugu.apiToken).to.be.equal(iugu.apiToken)
+            expect(localIugu.accountID).to.be.equal(iugu.accountID)
+        })
+
+        it('should throw with no parameter and no env', () => {
+            delete process.env.IUGU_TOKEN
+            return expect(() => { return new Iugu() }).to.throw()
+        })
     })
 
     describe('#get#token', () => {

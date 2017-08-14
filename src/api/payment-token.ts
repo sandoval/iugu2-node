@@ -9,6 +9,6 @@ export class PaymentTokenAPI extends APIWrapper {
      * @param tokenData the data for the token that will be created
      */
     public create(tokenData: NewPaymentToken): Promise<PaymentToken> {
-        return this.iugu.makeRequest<NewPaymentToken, PaymentToken>('POST', '/payment_token').begin(tokenData)
+        return this.iugu.makeRequest<PaymentToken, NewPaymentToken>('POST', '/payment_token').begin(tokenData)
     }
 }

@@ -1,6 +1,6 @@
 import { Request } from './http/request'
 import { PagedRequest } from './http/paged-request'
-import { CustomerAPI, PaymentTokenAPI } from './api'
+import { CustomerAPI, PaymentTokenAPI, PlanAPI } from './api'
 
 // The default IUGU API url
 const API_URL = 'https://api.iugu.com/v1'
@@ -15,6 +15,7 @@ export class Iugu {
     private token: string
     private customerInstance: CustomerAPI
     private paymentTokenInstance: PaymentTokenAPI
+    private planInstance: PlanAPI
 
     /**
      * Returns the current instance API token
@@ -54,6 +55,14 @@ export class Iugu {
         }
 
         return this.paymentTokenInstance
+    }
+
+    public get plan(): PlanAPI {
+        if (!this.planInstance) {
+            this.planInstance = new PlanAPI(this)
+        }
+
+        return this.planInstance
     }
 
     /**

@@ -6,7 +6,7 @@
 
 import { Request } from './http/request'
 import { PagedRequest } from './http/paged-request'
-import { CustomerAPI, PaymentTokenAPI, PlanAPI } from './api'
+import { CustomerAPI, PaymentTokenAPI, PlanAPI, SubscriptionAPI } from './api'
 
 // The default IUGU API url
 const API_URL = 'https://api.iugu.com/v1'
@@ -17,11 +17,12 @@ const API_URL = 'https://api.iugu.com/v1'
  * Should be constructed passing the API token as parameter (see https://dev.iugu.com/v1.0/reference#autentica%C3%A7%C3%A3o)
  */
 export class Iugu {
-    private _accountID: string;
+    private _accountID: string
     private token: string
     private customerInstance: CustomerAPI
     private paymentTokenInstance: PaymentTokenAPI
     private planInstance: PlanAPI
+    private subscriptionInstance: SubscriptionAPI
 
     /**
      * Returns the current instance API token
@@ -36,7 +37,7 @@ export class Iugu {
      * @since 0.2.1
      */
     public get accountID(): string {
-        return this._accountID;
+        return this._accountID
     }
 
     /**
@@ -45,7 +46,7 @@ export class Iugu {
      * @since 0.2.1
      */
     public set accountID(v: string) {
-        this._accountID = v;
+        this._accountID = v
     }
 
     /**
@@ -85,6 +86,19 @@ export class Iugu {
         }
 
         return this.planInstance
+    }
+
+    /**
+     * Access the subscription API
+     *
+     * @since 0.4.0
+     */
+    public get subscription(): SubscriptionAPI {
+        if (!this.subscriptionInstance) {
+            this.subscriptionInstance = new SubscriptionAPI(this)
+        }
+
+        return this.subscriptionInstance
     }
 
     /**

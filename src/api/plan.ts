@@ -13,7 +13,7 @@ import { Plan, NewPlan } from '../interfaces/plan'
 
 export class PlanAPI extends APIWrapper {
     /**
-     * Creates a new Plan
+     * Creates a new {@link Plan}
      *
      * @param {NewPlan} planData the data for the plan that will be created
      * @returns {Promise<Plan>} a promise that may resolve to the created object
@@ -23,9 +23,9 @@ export class PlanAPI extends APIWrapper {
     }
 
     /**
-     * Returns information of an existing Plan
+     * Returns information of an existing {@link Plan}
      *
-     * @param {string} id the ID of the Plan
+     * @param {string} id the ID of the {@link Plan}
      * @returns {Promise<Plan>} a promise that may resolve to the desired object or be rejected if the id is invalid
      */
     public get(id: string): Promise<Plan> {

@@ -7,7 +7,7 @@
 // tslint:disable:no-unused-expression
 import { expect, should, timeout } from '../chai'
 import { token } from '../token'
-import { customerDefaults } from '../customer'
+import { customerDefaults, planDefaults } from '../test-defaults'
 
 import { ITestCallbackContext } from 'mocha'
 
@@ -18,9 +18,11 @@ import { Plan, NewPlan } from '../../src/interfaces/plan'
 describe('PlanAPI', () => {
     let iugu: Iugu
     let plan: Plan
+    let planIdentifier: string
 
     before('initializing', () => {
         iugu = new Iugu(token)
+        planIdentifier = 'test_plan_' + (Math.random() * 10000).toFixed(0)
     })
 
     describe('#constructor', () => {
@@ -34,14 +36,9 @@ describe('PlanAPI', () => {
         it('should create a new Plan', function (this: ITestCallbackContext) {
             this.timeout(timeout)
 
-            return iugu.plan.create({
-                name: 'Test Plan',
-                identifier: 'test_plan',
-                interval: 1,
-                interval_type: 'months',
-                payable_with: 'all',
-                value_cents: 1999
-            }).then(p => {
+            let planData: NewPlan = Object.assign({ identifier: planIdentifier }, planDefaults)
+
+            return iugu.plan.create(planData).then(p => {
                 plan = p
 
                 expect(p).to.be.not.null

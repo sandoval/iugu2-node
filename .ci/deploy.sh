@@ -27,7 +27,7 @@ git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
 cd ..
 
 # Clean out existing contents
-rm -rf out/* out/.* || exit 0
+rm -rf out/* out/.ci out/.nyc_output out/.vscode out/.gitignore out/.npmignore out/.travis.yml
 
 # Run our compile script
 docGen

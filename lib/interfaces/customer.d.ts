@@ -1,3 +1,8 @@
+/**
+ * @file declaration of the Customer interface
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
 import { CustomVariable } from './custom-variable';
 import { Object } from './object';
 /**
@@ -5,17 +10,17 @@ import { Object } from './object';
  */
 export interface Customer extends Object {
     /**
-     * Customer e-mail address. Required.
+     * Customer e-mail address. Required on creation.
      *
      * @type String
      */
-    email: string;
+    email?: string;
     /**
-     * Customer name. Required.
+     * Customer name. Required on creation.
      *
      * @type String
      */
-    name: string;
+    name?: string;
     /**
      * Additional information
      *

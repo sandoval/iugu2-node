@@ -44,7 +44,7 @@ describe('PlanAPI', () => {
                 expect(p).to.be.not.null
                 if (p) {
                     expect(p.id).to.be.not.empty
-                    expect(p.identifier).to.be.equal('test_plan')
+                    expect(p.identifier).to.be.equal(planIdentifier)
                 }
             })
         })

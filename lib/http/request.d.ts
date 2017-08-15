@@ -16,7 +16,6 @@ export interface Error<T> {
         message?: string;
     };
     body?: T;
-    rawBody?: Buffer;
     strBody?: string;
     error?: any;
 }
@@ -51,12 +50,18 @@ export declare class Request<InType, OutType> {
     /**
      * Sets new HTTP headers for the request.
      *
-     * Internally, it calls {@link XMLClient#setHeader} for each defined key/value pair of the headers parameter
+     * Internally, it calls `setHeader` for each defined key/value pair of the headers parameter
      *
-     * @param {Object} headers A table containing the header name as its key, and the header contents as its value.
+     * @param {Object} headers A hash table containing the header name as its key, and the header contents as its value.
      */
     setHeaders(headers: any): void;
-    getHeader(name: string): any;
+    /**
+     * Gets a header from the headers data
+     *
+     * @param name the name of the desired header
+     * @returns the value for the header if it exists, `undefined` otherwise
+     */
+    getHeader(name: string): string;
     private createHttp(uri);
     private createHttps(uri);
     /**

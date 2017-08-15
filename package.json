@@ -9,7 +9,7 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test": "nyc mocha",
     "test:watch": "mocha -w --reporter min",
-    "docs": "typedoc --out out"
+    "docs": "typedoc --disableOutputCheck --out out"
   },
   "repository": {
     "type": "git",

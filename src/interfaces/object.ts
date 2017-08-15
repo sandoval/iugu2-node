@@ -4,12 +4,15 @@
  * @license MIT
  */
 
+export interface Identifier {
+    id?: string
+}
+
 /**
  * Defines common attributes, used by several objects
  * @mixin
  */
-export interface Object {
-    id?: string
+export interface Object extends Identifier {
     created_at?: Date
     updated_at?: Date
 }

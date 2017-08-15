@@ -5,7 +5,7 @@
  */
 
 import { CreditCardData } from './payment-method'
-import { Object } from './object'
+import { Identifier } from './object'
 
 /**
  * Struct to be passed as `data` to the NewPaymentToken interface
@@ -69,7 +69,7 @@ export interface NewPaymentToken {
     data: PaymentTokenCreditCardData
 }
 
-export interface PaymentToken extends Object {
+export interface PaymentToken extends Identifier {
     /**
      * Payment method. Only supported value, for now, is 'credit_card'
      */

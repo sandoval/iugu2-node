@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Object } from './object'
+import { Identifier } from './object'
 
 /**
  * Structure of a Credit Card inside payment method
@@ -40,7 +40,7 @@ export interface CreditCardData {
 /**
  * Declares a payment method associated with a Customer
  */
-export interface PaymentMethod extends Object {
+export interface PaymentMethod extends Identifier {
     /**
      * The description that should be shown to the user
      */

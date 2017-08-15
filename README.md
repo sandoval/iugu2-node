@@ -33,3 +33,5 @@ iugu.customer.create(customer).then(newCustomer => {
     console.error(error)
 })
 ```
+
+For complete reference, see our [TypeDoc](https://shirayukikitsune.github.io/iugu2-node/)

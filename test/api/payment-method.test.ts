@@ -7,7 +7,7 @@
 // tslint:disable:no-unused-expression
 import { expect, should, timeout } from '../chai'
 import { token } from '../token'
-import { customerDefaults } from '../customer'
+import { customerDefaults, paymentTokenDefaults } from '../test-defaults'
 
 import { ITestCallbackContext } from 'mocha'
 
@@ -73,14 +73,7 @@ describe('PaymentMethodAPI', () => {
                 account_id: iugu.accountID,
                 method: 'credit_card',
                 test: true,
-                data: {
-                    first_name: 'Bruno',
-                    last_name: 'Ferreira',
-                    month: '12',
-                    year: '2039',
-                    number: '378282246310005',
-                    verification_value: '3939'
-                }
+                data: paymentTokenDefaults
             }).then(p => {
                 if (p.id) {
                     newPaymentMethod.token = p.id

@@ -32,14 +32,14 @@ export class PagedRequest<InType, OutType> extends Request<InType, PagedResponse
      * Gets the current page number
      */
     public get page(): number {
-        return this._page;
+        return this._page
     }
 
     /**
      * Sets the current page number
      */
     public set page(v: number) {
-        this._page = v;
+        this._page = v
     }
 
     /**

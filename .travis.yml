@@ -2,13 +2,17 @@ language: node_js
 dist: trusty
 sudo: false
 node_js:
-  - node
-  - lts/*
+- node
+- lts/*
 install:
-  - npm install
+- npm install
 script:
-  - npm run lint
-  - npm run build
-  - npm test
+- npm run lint
+- npm run build
+- npm test
 after_success:
-  - npm run coveralls
+- npm run coveralls
+- bash .ci/deploy.sh
+env:
+  global:
+    secure: j1mIElhkQUOzteEIjfNZ1nfqGlhsbxIIqLTlLkZJy6hWnO7Z+iauUALBcLHKV2fcQTeKjOjLHjplrigXNAkmrlIj7SchreQWCejKmF1pa+Rtuhp6G0zFWK5yy7TDPWsqTkBa3aLJ52/lrh5RI1C6GP/zWpGxyXw+9pSngXqCaFat6+bnz15LSL2qzkYbVpevJZtMcnHDYDxvqln5/7WdoMwdS5pNimgio8km2hIsjsgryEboBTznkakq872XAMnyl/aKHTr2tJjRJd20QL+j4+SzdJMRqXNNg1n0NojqLbe7tc68wD/ROZJUacXK0V1BpBFLL487OTtrmviR/CGJVDeJ1Ze4h2JXQgI+XhbWRvC5oKnqO9A5rYlQTVm0x5ZsgBf1IfVkyyCh6CeVsRr8FP47zPULUhqqcDKzA/pK/XK//axqrZqos+oj8GBpE1JFBLsLWHv3I0xFryen2qILRrTDx0Dy1wNsivpiU/ddiiq5xlk7qXtm/E0bbcu0vjLbmIqpjV+Kq6lcm/yQrcsVNBooAdNuBYeYm2dKuioNa1wKwu9dn3k29d49ry/dgr/XD3vIETkMZQFwWPVj2D2XLx4jFQg8XU6qUWrtWSDu67dmTSLEnhxXoI5G6Ms69qlsFYYmEH7y8emzYDHMBbPaLd855/+lt42KHRspG7ZCxyc=

@@ -6,7 +6,6 @@ TARGET_BRANCH="gh-pages"
 
 function docGen {
     npm run-script docs
-    mv ./out/node-bandwidth/*/* ./out
 }
 NODE_VERSION=`node --version`
 NODE_VERSION=${NODE_VERSION:1:1}

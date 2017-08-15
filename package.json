@@ -8,7 +8,8 @@
     "lint": "tslint src/**/*.ts --format stylish --type-check --project tsconfig.json",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test": "nyc mocha",
-    "test:watch": "mocha -w --reporter min"
+    "test:watch": "mocha -w --reporter min",
+    "docs": "typedoc --out out"
   },
   "repository": {
     "type": "git",
@@ -61,6 +62,8 @@
     "sinon-chai": "^2.13.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.6.0",
+    "typedoc": "^0.8.0",
+    "typedoc-dash-theme": "^1.1.0",
     "typescript": "^2.4.2"
   },
   "dependencies": {},

@@ -1,5 +1,12 @@
 /**
+ * @file declaration of the Object interface
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
+/**
  * Defines common attributes, used by several objects
+ * @mixin
  */
 export interface Object {
     id?: string

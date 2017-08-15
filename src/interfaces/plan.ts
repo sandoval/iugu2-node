@@ -1,3 +1,9 @@
+/**
+ * @file declaration of the Plan interfaces
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { Object } from './object'
 
 /**
@@ -37,6 +43,10 @@ export interface PlanPrice extends Object {
     value_cents: number
 }
 
+/**
+ * Contains properties shared for both {@link NewPlan} and {@link Plan} interfaces
+ * @mixin
+ */
 export interface BasePlanInfo {
     /**
      * Plan name. Required on creation.

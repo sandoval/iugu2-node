@@ -1,7 +1,14 @@
+/**
+ * @file declaration of the PaymentMethod interfaces
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { Object } from './object'
 
 /**
  * Structure of a Credit Card inside payment method
+ * @mixin
  */
 export interface CreditCardData {
     /**

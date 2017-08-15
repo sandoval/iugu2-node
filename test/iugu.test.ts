@@ -1,3 +1,9 @@
+/**
+ * @file tests for the Iugu class
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 // tslint:disable:no-unused-expression
 import { expect, should } from './chai'
 import { token } from './token'

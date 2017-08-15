@@ -1,3 +1,9 @@
+/**
+ * @file definition for the CustomerAPI class
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { APIWrapper } from '../api-wrapper'
 import { PaymentMethodAPI } from './payment-method'
 

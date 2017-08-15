@@ -1,8 +1,16 @@
+/**
+ * @file declaration of the PaymentToken interfaces
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { CreditCardData } from './payment-method'
 import { Object } from './object'
 
 /**
  * Struct to be passed as `data` to the NewPaymentToken interface
+ *
+ * @mixin
  */
 export interface PaymentTokenCreditCardData {
     /**

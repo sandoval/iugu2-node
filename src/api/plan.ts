@@ -1,3 +1,9 @@
+/**
+ * @file definition for the PlanAPI class
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { APIWrapper } from './api-wrapper'
 
 import { PagedRequest } from '../http/paged-request'
@@ -9,7 +15,8 @@ export class PlanAPI extends APIWrapper {
     /**
      * Creates a new Plan
      *
-     * @param planData the data for the plan that will be created
+     * @param {NewPlan} planData the data for the plan that will be created
+     * @returns {Promise<Plan>} a promise that may resolve to the created object
      */
     public create(planData: NewPlan): Promise<Plan> {
         return this.iugu.makeRequest<Plan, NewPlan>('POST', '/plans').begin(planData).then(outPlan => recreateDateFields(outPlan))
@@ -18,7 +25,8 @@ export class PlanAPI extends APIWrapper {
     /**
      * Returns information of an existing Plan
      *
-     * @param id the ID of the Plan
+     * @param {string} id the ID of the Plan
+     * @returns {Promise<Plan>} a promise that may resolve to the desired object or be rejected if the id is invalid
      */
     public get(id: string): Promise<Plan> {
         if (!id) {
@@ -29,9 +37,10 @@ export class PlanAPI extends APIWrapper {
     }
 
     /**
-     * Returns information of an existing Plan
+     * Returns information of an existing {@link Plan}
      *
-     * @param id the identifier of the Plan
+     * @param {string} identifier the identifier of the {@link Plan}
+     * @returns {Promise<Plan>} a promise that may resolve to the desired object or be rejected if the identifier is invalid
      */
     public getByIdentifier(identifier: string): Promise<Plan> {
         if (!identifier) {
@@ -42,16 +51,17 @@ export class PlanAPI extends APIWrapper {
     }
 
     /**
-     * Returns a PagedRequest for all Customers
+     * Returns a {@link PagedRequest} for all {@link Customer}s
      */
     public list(): PagedRequest<void, Plan> {
         return this.iugu.makePagedRequest<Plan>('GET', '/plans')
     }
 
     /**
-     * Updates an existing Plan
+     * Updates an existing {@link Plan}
      *
-     * @param plan the Plan to be updated
+     * @param {Plan} plan the {@link Plan} to be updated
+     * @returns {Promise<Plan>} a promise that may resolve to the updated object
      */
     public update(plan: Plan): Promise<Plan> {
         if (!plan.id) {
@@ -72,7 +82,9 @@ export class PlanAPI extends APIWrapper {
     }
 
     /**
-     * Deletes an existing Plan
+     * Deletes an existing {@link Plan}
+     *
+     * @returns {Promise<void>} a promise that will resolve if the removal was successful and be rejected otherwise
      */
     public delete(id: string): Promise<void> {
         if (!id) {

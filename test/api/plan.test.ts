@@ -1,3 +1,9 @@
+/**
+ * @file tests for the PlanAPI class
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 // tslint:disable:no-unused-expression
 import { expect, should, timeout } from '../chai'
 import { token } from '../token'

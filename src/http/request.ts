@@ -1,3 +1,9 @@
+/**
+ * @file definition for most of HTTP-related classes
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { JSONDecoder } from './json-decoder'
 import { JSONEncoder } from './json-encoder'
 
@@ -22,7 +28,6 @@ export interface Error<T> {
         message?: string
     }
     body?: T
-    rawBody?: Buffer
     strBody?: string
     error?: any
 }
@@ -39,7 +44,7 @@ export interface RequestOptions {
 export class Request<InType, OutType> {
     private method: string
     private request: http.ClientRequest
-    private headers: any = {
+    private headers: { [header: string]: string } = {
         // Currently this class always use JSON encoder/decoder, so add content-type and accept headers
         'content-type': 'application/json',
         'accept': 'application/json'
@@ -93,9 +98,9 @@ export class Request<InType, OutType> {
     /**
      * Sets new HTTP headers for the request.
      *
-     * Internally, it calls {@link XMLClient#setHeader} for each defined key/value pair of the headers parameter
+     * Internally, it calls `setHeader` for each defined key/value pair of the headers parameter
      *
-     * @param {Object} headers A table containing the header name as its key, and the header contents as its value.
+     * @param {Object} headers A hash table containing the header name as its key, and the header contents as its value.
      */
     public setHeaders(headers: any) {
         for (let i in headers) {
@@ -107,6 +112,12 @@ export class Request<InType, OutType> {
         }
     }
 
+    /**
+     * Gets a header from the headers data
+     *
+     * @param name the name of the desired header
+     * @returns the value for the header if it exists, `undefined` otherwise
+     */
     public getHeader(name: string) {
         name = name.toLocaleLowerCase()
 
@@ -157,33 +168,34 @@ export class Request<InType, OutType> {
                 })
 
                 response.on('end', () => {
-                    if (response.statusCode) {
-                        if (response.statusCode < 200 || response.statusCode > 299) {
+                    try {
+                        let jsonResponse = this.decoder.decodeResponse(rawData)
+
+                        if (response.statusCode && (response.statusCode < 200 || response.statusCode > 299)) {
                             let errorData: Error<OutType> = {
                                 status: {
                                     code: response.statusCode,
                                     message: response.statusMessage
                                 },
-                                rawBody: rawData,
-                                strBody: rawData.toString('utf8')
+                                strBody: rawData.toString('utf8'),
+                                body: jsonResponse
                             }
 
                             reject(errorData)
                             return
                         }
-                    }
 
-                    try {
-                        let jsonResponse = this.decoder.decodeResponse(rawData)
                         resolve(jsonResponse)
                     } catch (e) {
                         let errorData: Error<OutType> = {
                             error: e
                         }
+
                         reject(errorData)
                     }
                 })
             })
+
             this.request.on('error', error => {
                 let errorData: Error<OutType> = {
                     error: error

@@ -1,3 +1,9 @@
+/**
+ * @file declaration of the Customer interface
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { CustomVariable } from './custom-variable'
 import { Object } from './object'
 

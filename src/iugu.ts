@@ -1,3 +1,9 @@
+/**
+ * @file Definition for the Iugu class
+ * @author Bruno Ferreira <shirayuki@kitsune.com.br>
+ * @license MIT
+ */
+
 import { Request } from './http/request'
 import { PagedRequest } from './http/paged-request'
 import { CustomerAPI, PaymentTokenAPI, PlanAPI } from './api'
@@ -26,6 +32,8 @@ export class Iugu {
 
     /**
      * Returns the account ID
+     *
+     * @since 0.2.1
      */
     public get accountID(): string {
         return this._accountID;
@@ -33,6 +41,8 @@ export class Iugu {
 
     /**
      * Sets the account ID. Needed only for payment token creation.
+     *
+     * @since 0.2.1
      */
     public set accountID(v: string) {
         this._accountID = v;
@@ -40,6 +50,8 @@ export class Iugu {
 
     /**
      * Access the customer API
+     *
+     * @since 0.1.0
      */
     public get customer(): CustomerAPI {
         if (!this.customerInstance) {
@@ -49,6 +61,11 @@ export class Iugu {
         return this.customerInstance
     }
 
+    /**
+     * Access the payment token API
+     *
+     * @since 0.2.1
+     */
     public get paymentToken(): PaymentTokenAPI {
         if (!this.paymentTokenInstance) {
             this.paymentTokenInstance = new PaymentTokenAPI(this)
@@ -57,6 +74,11 @@ export class Iugu {
         return this.paymentTokenInstance
     }
 
+    /**
+     * Access the plan API
+     *
+     * @since 0.3.0
+     */
     public get plan(): PlanAPI {
         if (!this.planInstance) {
             this.planInstance = new PlanAPI(this)

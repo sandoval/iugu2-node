@@ -37,8 +37,7 @@ describe('SubscriptionAPI', () => {
     const newSubscription: NewSubscription = {
         expires_at: new Date(new Date().getTime() + 86400000),
         customer_id: '',
-        plan_identifier: '',
-        only_on_charge_success: true
+        plan_identifier: ''
     }
 
     before('initializing', () => {
@@ -64,7 +63,9 @@ describe('SubscriptionAPI', () => {
                 data: paymentTokenDefaults
             })
         }).then(paymentToken => {
-            newPaymentMethod.token = paymentToken.id
+            if (paymentToken && paymentToken.id) {
+                newPaymentMethod.token = paymentToken.id
+            }
 
             return iugu.customer.paymentMethod.create(customer, newPaymentMethod)
         }).then(method => {
@@ -73,19 +74,19 @@ describe('SubscriptionAPI', () => {
     })
 
     after('cleanup', () => {
-        let p: Promise<any> = Promise.resolve()
-
-        if (customer && customer.id) {
-            if (paymentMethod && paymentMethod.id) {
-                p = p.then(() => iugu.customer.paymentMethod.delete(customer.id, paymentMethod.id))
+        let p: Promise<any> = Promise.resolve().then(() => {
+            if (customer && customer.id && paymentMethod && paymentMethod.id) {
+                return iugu.customer.paymentMethod.delete(customer.id, paymentMethod.id)
             }
-
-            p = p.then(() => iugu.customer.delete(customer.id))
-        }
-
-        if (plan && plan.id) {
-            p = p.then(() => iugu.plan.delete(plan.id))
-        }
+        }).then(() => {
+            if (customer && customer.id) {
+                return iugu.customer.delete(customer.id)
+            }
+        }).then(() => {
+            if (plan && plan.id) {
+                iugu.plan.delete(plan.id)
+            }
+        })
 
         return p
     })

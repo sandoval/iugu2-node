@@ -17,7 +17,11 @@
                 "--colors",
                 "${workspaceRoot}/test"
             ],
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "IUGU_ACCOUNTID": "355482C9CE1249AAA95709C0F5EF5275",
+                "IUGU_TOKEN": "f2ca2baa0f09a3d2fa0305b39d8c8519"
+            }
         },
         {
             "type": "node",

@@ -40,7 +40,9 @@ describe('SubscriptionAPI', () => {
         plan_identifier: ''
     }
 
-    before('initializing', () => {
+    before('initializing', function (this: ITestCallbackContext) {
+        this.timeout(timeout * 2)
+
         iugu = new Iugu(token)
         planIdentifier = 'sub_test_plan_' + (Math.random() * 10000).toFixed(0)
 
@@ -122,6 +124,10 @@ describe('SubscriptionAPI', () => {
                 expect(s.id).to.be.not.empty
             })
         })
+
+        it('should fail with an invalid id', () => {
+            return expect(iugu.subscription.activate('')).to.be.rejectedWith(Error, 'invalid_id');
+        })
     })
 
     describe('suspend', () => {
@@ -135,13 +141,65 @@ describe('SubscriptionAPI', () => {
                 expect(s.id).to.be.not.empty
             })
         })
+
+        it('should fail with an invalid id', () => {
+            return expect(iugu.subscription.suspend({})).to.be.rejectedWith(Error, 'invalid_id');
+        })
+    })
+
+    describe('update', () => {
+        it('should change description', () => {
+            return iugu.subscription.update(subscription, {
+                expires_at: new Date(new Date().getTime() + 86400000 * 7)
+            }).then(s => {
+                expect(s).to.be.not.null.and.not.undefined
+                expect(s.id).to.be.equal(subscription.id)
+                expect(s.expires_at).to.be.not.undefined
+                if (s.expires_at) {
+                    expect(s.expires_at.getTime()).to.be.gte(new Date().getTime() + 86400000 * 6.8).and.lte(new Date().getTime() + 86400000 * 7)
+                }
+            })
+        })
+
+        it('should fail with an invalid id', () => {
+            return expect(iugu.subscription.update('', {})).to.be.rejectedWith(Error, 'invalid_id');
+        })
+    })
+
+    describe('get', () => {
+        it('should resolve to a valid subscription', function (this: ITestCallbackContext) {
+            this.timeout(timeout)
+
+            return iugu.subscription.get(subscription).then(s => {
+                expect(s).to.be.not.null
+                expect(s.id).to.be.not.empty.and.equal(subscription.id)
+            })
+        })
+
+        it('should fail with an invalid id', () => {
+            return expect(iugu.subscription.get('')).to.be.rejectedWith(Error, 'invalid_id');
+        })
+    })
+
+    describe('list', () => {
+        it('should return at least one subscription', () => {
+            return iugu.subscription.list().begin().then(l => {
+                expect(l).to.be.not.null.and.not.undefined.and.not.empty
+                expect(l.items).to.be.not.empty
+                expect(l.totalItems).to.be.gte(1)
+            })
+        })
     })
 
     describe('delete', () => {
         it('should delete the created Subscription', function (this: ITestCallbackContext) {
             this.timeout(timeout)
 
-            return expect(iugu.subscription.delete(subscription)).to.be.fulfilled
+            return expect(iugu.subscription.delete(subscription.id)).to.be.fulfilled
+        })
+
+        it('should fail with an invalid id', () => {
+            return expect(iugu.subscription.delete('')).to.be.rejectedWith(Error, 'invalid_id');
         })
     })
 })

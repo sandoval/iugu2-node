@@ -6,7 +6,7 @@
 
 import { Request } from './http/request'
 import { PagedRequest } from './http/paged-request'
-import { CustomerAPI, PaymentTokenAPI, PlanAPI, SubscriptionAPI } from './api'
+import { CustomerAPI, HookAPI, PaymentTokenAPI, PlanAPI, SubscriptionAPI } from './api'
 
 // The default IUGU API url
 const API_URL = 'https://api.iugu.com/v1'
@@ -20,6 +20,7 @@ export class Iugu {
     private _accountID: string
     private token: string
     private customerInstance: CustomerAPI
+    private hookInstance: HookAPI
     private paymentTokenInstance: PaymentTokenAPI
     private planInstance: PlanAPI
     private subscriptionInstance: SubscriptionAPI
@@ -60,6 +61,19 @@ export class Iugu {
         }
 
         return this.customerInstance
+    }
+
+    /**
+     * Access the hook API
+     *
+     * @since 0.5.0
+     */
+    public get hook(): HookAPI {
+        if (!this.hookInstance) {
+            this.hookInstance = new HookAPI(this)
+        }
+
+        return this.hookInstance
     }
 
     /**

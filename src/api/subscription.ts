@@ -7,6 +7,7 @@
 
 import { APIWrapper } from './api-wrapper'
 
+import { recreateDateFields } from '../interfaces/object'
 import { NewSubscription, Subscription, UpdateSubscription } from '../interfaces/subscription'
 
 import { PagedRequest } from '../http/paged-request'
@@ -24,6 +25,14 @@ export class SubscriptionAPI extends APIWrapper {
         return subscription
     }
 
+    private recreateExpires(sub: Subscription): Subscription {
+        if (sub.expires_at) {
+            sub.expires_at = new Date(<any>sub.expires_at)
+        }
+
+        return recreateDateFields(sub)
+    }
+
     /**
      * Creates a new {@link Subscription}
      *
@@ -31,7 +40,7 @@ export class SubscriptionAPI extends APIWrapper {
      * @returns {Promise<Subscription>} a promise that may resolve to the created object
      */
     public create(data: NewSubscription): Promise<Subscription> {
-        return this.iugu.makeRequest<Subscription, NewSubscription>('POST', '/subscriptions').begin(data)
+        return this.iugu.makeRequest<Subscription, NewSubscription>('POST', '/subscriptions').begin(data).then(s => this.recreateExpires(s))
     }
 
     /**
@@ -47,7 +56,7 @@ export class SubscriptionAPI extends APIWrapper {
             return Promise.reject(new Error('invalid_id'))
         }
 
-        return this.iugu.makeRequest<Subscription>('GET', `/subscriptions/${id}`).begin()
+        return this.iugu.makeRequest<Subscription>('GET', `/subscriptions/${id}`).begin().then(s => this.recreateExpires(s))
     }
 
     /**
@@ -70,7 +79,7 @@ export class SubscriptionAPI extends APIWrapper {
             return Promise.reject(new Error('invalid_id'))
         }
 
-        return this.iugu.makeRequest<Subscription>('POST', `/subscriptions/${id}/activate`).begin()
+        return this.iugu.makeRequest<Subscription>('POST', `/subscriptions/${id}/activate`).begin().then(s => this.recreateExpires(s))
     }
 
     /**
@@ -86,7 +95,7 @@ export class SubscriptionAPI extends APIWrapper {
             return Promise.reject(new Error('invalid_id'))
         }
 
-        return this.iugu.makeRequest<Subscription>('POST', `/subscriptions/${id}/suspend`).begin()
+        return this.iugu.makeRequest<Subscription>('POST', `/subscriptions/${id}/suspend`).begin().then(s => this.recreateExpires(s))
     }
 
     /**
@@ -102,7 +111,7 @@ export class SubscriptionAPI extends APIWrapper {
             return Promise.reject(new Error('invalid_id'))
         }
 
-        return this.iugu.makeRequest<Subscription, UpdateSubscription>('PUT', `/subscriptions/${id}`).begin(newData)
+        return this.iugu.makeRequest<Subscription, UpdateSubscription>('PUT', `/subscriptions/${id}`).begin(newData).then(s => this.recreateExpires(s))
     }
 
     /**
@@ -118,6 +127,6 @@ export class SubscriptionAPI extends APIWrapper {
             return Promise.reject(new Error('invalid_id'))
         }
 
-        return this.iugu.makeRequest<Subscription>('DELETE', `/subscriptions/${id}`).begin()
+        return this.iugu.makeRequest<Subscription>('DELETE', `/subscriptions/${id}`).begin().then(s => this.recreateExpires(s))
     }
 }

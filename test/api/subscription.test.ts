@@ -156,7 +156,7 @@ describe('SubscriptionAPI', () => {
                 expect(s.id).to.be.equal(subscription.id)
                 expect(s.expires_at).to.be.not.undefined
                 if (s.expires_at) {
-                    expect(s.expires_at.getTime()).to.be.gte(new Date().getTime() + 86400000 * 6.8).and.lte(new Date().getTime() + 86400000 * 7)
+                    expect(s.expires_at.getTime()).to.be.gte(new Date().getTime() + 86400000 * 6).and.lte(new Date().getTime() + 86400000 * 7)
                 }
             })
         })
@@ -172,7 +172,8 @@ describe('SubscriptionAPI', () => {
 
             return iugu.subscription.get(subscription).then(s => {
                 expect(s).to.be.not.null
-                expect(s.id).to.be.not.empty.and.equal(subscription.id)
+                expect(s.id).to.be.not.empty
+                expect(s.id).to.be.equal(subscription.id)
             })
         })
 
@@ -195,7 +196,9 @@ describe('SubscriptionAPI', () => {
         it('should delete the created Subscription', function (this: ITestCallbackContext) {
             this.timeout(timeout)
 
-            return expect(iugu.subscription.delete(subscription.id)).to.be.fulfilled
+            if (subscription && subscription.id) {
+                return expect(iugu.subscription.delete(subscription.id)).to.be.fulfilled
+            }
         })
 
         it('should fail with an invalid id', () => {

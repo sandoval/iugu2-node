@@ -9,6 +9,7 @@ import { NewSubscription, Subscription, UpdateSubscription } from '../interfaces
 import { PagedRequest } from '../http/paged-request';
 export declare class SubscriptionAPI extends APIWrapper {
     private subscriptionParamToString(subscription);
+    private recreateExpires(sub);
     /**
      * Creates a new {@link Subscription}
      *

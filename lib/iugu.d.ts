@@ -5,7 +5,7 @@
  */
 import { Request } from './http/request';
 import { PagedRequest } from './http/paged-request';
-import { CustomerAPI, PaymentTokenAPI, PlanAPI, SubscriptionAPI } from './api';
+import { CustomerAPI, HookAPI, PaymentTokenAPI, PlanAPI, SubscriptionAPI } from './api';
 /**
  * The class for interaction with IUGU.
  *
@@ -15,6 +15,7 @@ export declare class Iugu {
     private _accountID;
     private token;
     private customerInstance;
+    private hookInstance;
     private paymentTokenInstance;
     private planInstance;
     private subscriptionInstance;
@@ -39,6 +40,12 @@ export declare class Iugu {
      * @since 0.1.0
      */
     readonly customer: CustomerAPI;
+    /**
+     * Access the hook API
+     *
+     * @since 0.5.0
+     */
+    readonly hook: HookAPI;
     /**
      * Access the payment token API
      *

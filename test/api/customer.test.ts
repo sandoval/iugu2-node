@@ -155,7 +155,9 @@ describe('CustomerAPI', () => {
             request = iugu.customer.update(toChange)
         })
 
-        it('should change custom variables and updated_at', () => {
+        it('should change custom variables and updated_at', function (this: ITestCallbackContext) {
+            this.timeout(timeout)
+
             return request.then(c => {
                 expect(c).to.be.not.null
                 expect(c.id).to.be.equal(customer.id)

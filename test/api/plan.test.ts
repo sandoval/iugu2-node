@@ -91,7 +91,9 @@ describe('PlanAPI', () => {
     })
 
     describe('update', () => {
-        it('should change name', () => {
+        it('should change name', function (this: ITestCallbackContext) {
+            this.timeout(timeout)
+
             return iugu.plan.update({
                 id: plan.id,
                 name: 'Definitive Plan'

@@ -36,7 +36,9 @@ describe('PaymentMethodAPI', () => {
         })
     })
 
-    after('cleanup', () => {
+    after('cleanup', function (this: ITestCallbackContext) {
+        this.timeout(timeout)
+
         if (customer && customer.id) {
             return iugu.customer.delete(customer.id)
         }

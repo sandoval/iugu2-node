@@ -10,6 +10,7 @@ Also, since this is developed using TypeScript, everything has its type definiti
 [![Travis](https://img.shields.io/travis/shirayukikitsune/iugu2-node.svg)](https://travis-ci.org/shirayukikitsune/iugu2-node)
 [![Coverage Status](https://coveralls.io/repos/github/shirayukikitsune/iugu2-node/badge.svg?branch=master)](https://coveralls.io/github/shirayukikitsune/iugu2-node?branch=master)
 [![npm](https://img.shields.io/npm/v/iugu2-node.svg)](https://www.npmjs.com/package/iugu2-node)
+![Dev Dependencies](https://img.shields.io/david/dev/shirayukikitsune/iugu2-node.svg)
 
 ## How to use
 

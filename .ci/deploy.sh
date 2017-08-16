@@ -37,8 +37,10 @@ cd out
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
 
+DIFF_CODE=$(git diff --exit-code)
+
 # If there are no changes to the compiled out (e.g. this is a README update) then just bail.
-if [ -z `git diff --exit-code` ]; then
+if [ -z "$DIFF_CODE" ]; then
     echo "No changes to the output on this push; exiting."
     exit 0
 fi
